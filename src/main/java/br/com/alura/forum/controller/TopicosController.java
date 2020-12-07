@@ -10,12 +10,14 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import br.com.alura.forum.controller.dto.DetalhesDoTopicoDto;
 import br.com.alura.forum.controller.dto.TopicoDto;
 import br.com.alura.forum.controller.form.TopicoForm;
 //import br.com.alura.forum.modelo.Curso;
@@ -67,5 +69,17 @@ public class TopicosController {
 		return ResponseEntity.created(uri).body(new TopicoDto(topico));
 	}
 	
+	//@PathVariable
+	//Por padrão, as requisições pegam os parâmetros do request por meio do padrão ...?id=999&...
+	//Para avisar que o parâmetro que o request deve pegar é parte do caminho do EndPoint, utiliza-se o @PathVariable.
 	
+	//Podemos utilizar o mapeamento desta forma também:
+	//@GetMapping("/{id}")
+	//public DetalhesDoTopicoDto detalhar(@PathVariable("id") Long codigo) {}
+		
+	@GetMapping("/{id}")
+	public DetalhesDoTopicoDto detalhar(@PathVariable Long id) {
+		Topico topico = topicoRepository.getOne(id);
+		return new DetalhesDoTopicoDto(topico);
+	}
 }
