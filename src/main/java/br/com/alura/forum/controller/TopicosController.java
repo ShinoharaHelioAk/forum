@@ -6,6 +6,7 @@ import java.net.URI;
 //import java.util.List;
 import java.util.Optional;
 
+import org.springframework.cache.annotation.Cacheable;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 
@@ -58,6 +59,7 @@ public class TopicosController {
 	//@RequestParam -> Diz para o Spring que são parâmetros de url, e eles se tornam obrigatórios para serem informados.
 	//@ResponseBody //Indicamos que o retorno do método deve ser serializado e devolvido no corpo da resposta.
 	@GetMapping
+	@Cacheable(value = "listaDeTopicos")
 	public Page<TopicoDto> lista(@RequestParam(required = false) String nomeCurso 
 			//, @RequestParam int pagina, @RequestParam int qtd, @RequestParam String ordenacao
 			, @PageableDefault(sort = "id", direction = Direction.DESC, page = 0, size = 10) Pageable paginacao
