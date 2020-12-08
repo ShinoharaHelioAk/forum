@@ -6,6 +6,7 @@ import java.net.URI;
 //import java.util.List;
 import java.util.Optional;
 
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
@@ -90,8 +91,13 @@ public class TopicosController {
 	
 	//(Linha abaixo) O @RequestBody recupera parâmetros de Request com method=POST.
 	//@Transactional -> Avisar o Spring para realizar o commit no final da transação.
+	//@CacheEvict -> Indica para o Spring que o Cache de determinada funcionalidade seja limpa, 
+	//		para que a próxima listagem esteja atualizada de acordo com as alterações na base de dados.
+	//		Caso seja necessário limpar mais de um cache, utilizar o @CacheEvict da maneira abaixo:
+	//			@CacheEvict(value = { "cache1", "cache2" }, allEntries = true)
 	@PostMapping
 	@Transactional
+	@CacheEvict(value = "listaDeTopicos", allEntries = true)
 	public ResponseEntity<TopicoDto> cadastrar(@RequestBody @Valid TopicoForm form, UriComponentsBuilder uriBuilder) {
 		Topico topico = form.converter(cursoRepository);
 		topicoRepository.save(topico);
@@ -119,8 +125,11 @@ public class TopicosController {
 	}
 	
 	//@Transactional -> Avisar o Spring para realizar o commit no final da transação.
+	//@CacheEvict -> Indica para o Spring que o Cache de determinada funcionalidade seja limpa, 
+	//		para que a próxima listagem esteja atualizada de acordo com as alterações na base de dados.
 	@PutMapping("/{id}")
 	@Transactional
+	@CacheEvict(value = "listaDeTopicos", allEntries = true)
 	public ResponseEntity<TopicoDto> atualizar(@PathVariable Long id, @RequestBody @Valid AtualizacaoTopicoForm form) {
 		Optional<Topico> optional = topicoRepository.findById(id);
 		if (optional.isPresent()) {
@@ -135,8 +144,11 @@ public class TopicosController {
 	}
 	
 	//@Transactional -> Avisar o Spring para realizar o commit no final da transação.
+	//@CacheEvict -> Indica para o Spring que o Cache de determinada funcionalidade seja limpa, 
+	//		para que a próxima listagem esteja atualizada de acordo com as alterações na base de dados.
 	@DeleteMapping("/{id}")
 	@Transactional
+	@CacheEvict(value = "listaDeTopicos", allEntries = true)
 	public ResponseEntity<?> remover(@PathVariable Long id) {
 		Optional<Topico> optional = topicoRepository.findById(id);
 		if (optional.isPresent()) {
