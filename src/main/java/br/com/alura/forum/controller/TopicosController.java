@@ -10,6 +10,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -64,7 +65,9 @@ public class TopicosController {
 	}
 	
 	//(Linha abaixo) O @RequestBody recupera parâmetros de Request com method=POST.
+	//@Transactional -> Avisar o Spring para realizar o commit no final da transação.
 	@PostMapping
+	@Transactional
 	public ResponseEntity<TopicoDto> cadastrar(@RequestBody @Valid TopicoForm form, UriComponentsBuilder uriBuilder) {
 		Topico topico = form.converter(cursoRepository);
 		topicoRepository.save(topico);
@@ -95,5 +98,11 @@ public class TopicosController {
 		return ResponseEntity.ok(new TopicoDto(topico));
 	}
 	
-	
+	//@Transactional -> Avisar o Spring para realizar o commit no final da transação.
+	@DeleteMapping("/{id}")
+	@Transactional
+	public ResponseEntity<?> remover(@PathVariable Long id) {
+		topicoRepository.deleteById(id);
+		return ResponseEntity.ok().build();
+	}
 }
