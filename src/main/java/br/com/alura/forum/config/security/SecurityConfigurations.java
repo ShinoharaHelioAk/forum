@@ -19,7 +19,7 @@ import br.com.alura.forum.repository.UsuarioRepository;
 
 @EnableWebSecurity
 @Configuration
-@Profile("prod")
+//@Profile("prod")
 public class SecurityConfigurations extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private AutenticacaoService autenticacaoService;
@@ -57,6 +57,8 @@ public class SecurityConfigurations extends WebSecurityConfigurerAdapter {
 			.antMatchers(HttpMethod.GET, "/topicos/*").permitAll()
 			.antMatchers(HttpMethod.POST, "/auth").permitAll()
 			.antMatchers(HttpMethod.GET, "/actuator/**").permitAll()
+			//.antMatchers(HttpMethod.GET, "/h2-console/**").permitAll()
+			//.antMatchers(HttpMethod.POST, "/h2-console/**").permitAll()
 			.antMatchers(HttpMethod.DELETE, "/topicos/*").hasRole("MODERADOR")
 			.anyRequest()
 				.authenticated()

@@ -14,6 +14,9 @@ import br.com.alura.forum.modelo.Curso;
 
 //@DataJpaTest -> Anotação específica para execução de testes automatizados com interfaces Repository.
 //@ActiveProfiles("test") -> Força o Spring para que esta classe de testes tenha um Profile declarado como Ativo.
+//@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE) -> 
+//		Diz para o Spring como você quer que sejam feitos os testes com a base de dados.
+//		o replace = none diz para não substituir as configurações do banco de dados declarado no application.properties.
 @RunWith(SpringRunner.class)
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
