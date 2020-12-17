@@ -3,6 +3,7 @@ package br.com.alura.forum.config.security;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +13,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
 @Service
+@Profile(value = {"prod", "test"})
 public class TokenService {
 	
 	//@Value("${application.properties_KEY}") -> Linha abaixo:
