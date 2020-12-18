@@ -14,6 +14,8 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>forum</name>
 	<description>Demo project for Spring Boot</description>
+	<!-- Linha abaixo: é utilizada para especificar se o projeto será exportado como JAR ou WAR. -->
+	<!-- <packaging>war</packaging> -->
 
 	<properties>
 		<java.version>1.8</java.version>
@@ -24,6 +26,13 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
+		
+		<!-- A dependência abaixo é necessária apenas se o artefato a ser gerado for .WAR -->
+		<!-- <dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-tomcat</artifactId>
+			<scope>provided</scope>
+		</dependency> -->
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
